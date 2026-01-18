@@ -138,6 +138,12 @@ h2 {
     animation: pulse 2s infinite;
 }
 
+.birthday-info {
+    color: #2c3e50 !important;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
 .birthday-card.soon {
     border-left-color: #f39c12;
     background: #fff9e6;
@@ -547,5 +553,6 @@ footer a:hover {
         color: #95a5a6;
     }
 }
+
 
 
