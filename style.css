@@ -7,7 +7,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #222;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
     padding: 20px;
@@ -30,13 +30,13 @@ header {
 }
 
 h1 {
-    color: #2c3e50;
+    color: #1a2530;
     font-size: 2.5em;
     margin-bottom: 10px;
 }
 
 .subtitle {
-    color: #7f8c8d;
+    color: #5d6d7e;
     font-size: 1.1em;
 }
 
@@ -89,9 +89,10 @@ h1 {
     min-width: 150px;
     -webkit-appearance: none;
     appearance: none;
-    background: white url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 10px center;
+    background: white url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 10px center;
     background-size: 16px;
     padding-right: 35px;
+    color: #333;
 }
 
 .upcoming, .all-birthdays {
@@ -103,7 +104,7 @@ h1 {
 }
 
 h2 {
-    color: #2c3e50;
+    color: #1a2530;
     margin-bottom: 20px;
     font-size: 1.8em;
     display: flex;
@@ -147,21 +148,22 @@ h2 {
     font-size: 1.4em;
     color: #000000;
     margin-bottom: 5px;
+    font-weight: 600;
 }
 
 .birthday-date {
-    filter: brightness(0.8)
-    color: #7f8c8d;
+    color: #2c3e50;
     font-size: 1.1em;
     margin-bottom: 10px;
+    font-weight: 500;
 }
 
 .person-notes {
-    color: #666;
+    color: #444;
     font-size: 0.95em;
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ddd;
 }
 
 .card-actions {
@@ -177,7 +179,7 @@ h2 {
     border: none;
     cursor: pointer;
     font-size: 18px;
-    color: #95a5a6;
+    color: #7f8c8d;
     transition: color 0.3s;
     padding: 5px;
     touch-action: manipulation;
@@ -207,14 +209,14 @@ h2 {
 }
 
 .stat-card h3 {
-    color: #7f8c8d;
+    color: #5d6d7e;
     font-size: 1.1em;
     margin-bottom: 10px;
 }
 
 .stat-card p {
     font-size: 2.5em;
-    color: #2c3e50;
+    color: #1a2530;
     font-weight: bold;
 }
 
@@ -260,7 +262,7 @@ h2 {
     top: 20px;
     font-size: 28px;
     cursor: pointer;
-    color: #95a5a6;
+    color: #7f8c8d;
     padding: 5px;
     line-height: 1;
 }
@@ -277,7 +279,7 @@ h2 {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: #2c3e50;
+    color: #1a2530;
 }
 
 .form-group input,
@@ -290,6 +292,7 @@ h2 {
     transition: border-color 0.3s;
     -webkit-appearance: none;
     appearance: none;
+    color: #333;
 }
 
 .form-group input:focus,
@@ -305,7 +308,7 @@ h2 {
 .date-hint {
     display: block;
     font-size: 14px;
-    color: #7f8c8d;
+    color: #5d6d7e;
     margin-top: 5px;
     text-align: center;
     font-style: italic;
@@ -319,7 +322,7 @@ h2 {
 }
 
 .btn-secondary {
-    background: #95a5a6;
+    background: #7f8c8d;
     color: white;
     border: none;
     padding: 12px 25px;
@@ -331,13 +334,13 @@ h2 {
 }
 
 .btn-secondary:hover {
-    background: #7f8c8d;
+    background: #6c7b7d;
 }
 
 footer {
     text-align: center;
     margin-top: 40px;
-    color: #7f8c8d;
+    color: #5d6d7e;
     font-size: 0.9em;
     padding: 20px;
 }
@@ -356,6 +359,23 @@ footer a:hover {
     0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
     100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+/* Улучшения для сегодняшних и предстоящих дней рождений */
+.birthday-card.today .person-name {
+    color: #c0392b;
+}
+
+.birthday-card.today .birthday-date {
+    color: #e74c3c;
+}
+
+.birthday-card.soon .person-name {
+    color: #d35400;
+}
+
+.birthday-card.soon .birthday-date {
+    color: #e67e22;
 }
 
 /* Мобильные стили */
@@ -390,6 +410,7 @@ footer a:hover {
     .filter select {
         flex-grow: 1;
         min-width: auto;
+        color: #333;
     }
     
     .birthday-list {
@@ -419,10 +440,11 @@ footer a:hover {
     /* Улучшения для мобильного ввода */
     .form-group input,
     .form-group textarea {
-        font-size: 17px !important; /* Увеличиваем для iOS */
+        font-size: 17px !important;
         padding: 16px !important;
         min-height: 52px;
         border-radius: 12px;
+        color: #333;
     }
     
     /* Особые стили для поля даты на мобильных */
@@ -432,7 +454,7 @@ footer a:hover {
     }
     
     #birthdate::placeholder {
-        color: #aaa;
+        color: #777;
     }
     
     .date-hint {
@@ -441,6 +463,7 @@ footer a:hover {
         background: #f8f9fa;
         border-radius: 8px;
         margin-top: 10px;
+        color: #5d6d7e;
     }
     
     /* Улучшаем кнопки на мобильных */
@@ -465,6 +488,7 @@ footer a:hover {
     .action-btn {
         font-size: 22px;
         padding: 8px;
+        color: #7f8c8d;
     }
     
     /* Увеличиваем область нажатия */
@@ -512,7 +536,7 @@ footer a:hover {
     }
 }
 
-/* Стили для темной темы (опционально) */
+/* Стили для темной темы */
 @media (prefers-color-scheme: dark) {
     body {
         background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
@@ -522,31 +546,128 @@ footer a:hover {
     header, .controls, .upcoming, 
     .all-birthdays, .stat-card, 
     .modal-content, .birthday-card {
-        background: #34495e;
+        background: #2c3e50;
         color: #ecf0f1;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     
     .birthday-card {
-        background: #2c3e50;
+        background: #34495e;
     }
     
     h1, h2, h3, .person-name {
-        color: #ecf0f1;
+        color: #ffffff;
     }
     
     .subtitle, .date-hint {
         color: #bdc3c7;
     }
     
+    .birthday-date {
+        color: #ecf0f1 !important;
+    }
+    
+    .person-notes {
+        color: #bdc3c7;
+        border-top-color: #4a6572;
+    }
+    
+    .stat-card h3 {
+        color: #bdc3c7;
+    }
+    
+    .stat-card p {
+        color: #ffffff;
+    }
+    
     input, textarea, select {
-        background: #2c3e50;
-        color: #ecf0f1;
+        background: #34495e;
+        color: #ffffff !important;
         border-color: #4a6572;
     }
     
     input::placeholder, textarea::placeholder {
         color: #95a5a6;
     }
+    
+    .form-group label {
+        color: #ecf0f1;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #3498db;
+    }
+    
+    .filter select {
+        background: #34495e url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ecf0f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 10px center;
+        color: #ecf0f1 !important;
+        border-color: #4a6572;
+    }
+    
+    .close {
+        color: #bdc3c7;
+    }
+    
+    .close:hover {
+        color: #ffffff;
+    }
+    
+    .action-btn {
+        color: #bdc3c7;
+    }
+    
+    .action-btn:hover {
+        color: #3498db;
+    }
+    
+    .delete-btn:hover {
+        color: #e74c3c;
+    }
+    
+    footer {
+        color: #bdc3c7;
+    }
+    
+    /* Особые цвета для сегодняшних и предстоящих дней в темной теме */
+    .birthday-card.today {
+        background: #5c2c2c;
+        border-left-color: #e74c3c;
+    }
+    
+    .birthday-card.today .person-name {
+        color: #ff7675;
+    }
+    
+    .birthday-card.today .birthday-date {
+        color: #ff9f9f;
+    }
+    
+    .birthday-card.soon {
+        background: #5c4a2c;
+        border-left-color: #f39c12;
+    }
+    
+    .birthday-card.soon .person-name {
+        color: #ffb142;
+    }
+    
+    .birthday-card.soon .birthday-date {
+        color: #ffcc7a;
+    }
 }
 
-
+/* Дополнительные улучшения контрастности */
+@media (prefers-contrast: high) {
+    .person-name {
+        color: #000000 !important;
+    }
+    
+    .birthday-date {
+        color: #000000 !important;
+    }
+    
+    body {
+        color: #000000 !important;
+    }
+}
