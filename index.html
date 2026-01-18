@@ -6,6 +6,8 @@
     <title>Напоминалка дней рождения</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
     <div class="container">
@@ -76,7 +78,17 @@
                 </div>
                 <div class="form-group">
                     <label for="birthdate">Дата рождения *</label>
-                    <input type="text" id="birthdate" required placeholder="ДД.ММ.ГГГГ" pattern="\d{2}\.\d{2}\.\d{4}">
+                    <div class="date-input-wrapper">
+                        <input type="text" 
+                               id="birthdate" 
+                               required 
+                               placeholder="ДД.ММ.ГГГГ"
+                               pattern="\d{2}\.\d{2}\.\d{4}"
+                               inputmode="numeric">
+                        <span class="date-hint">📅 Нажмите для выбора даты</span>
+                    </div>
+                    <!-- Скрытое поле для хранения даты в формате YYYY-MM-DD -->
+                    <input type="hidden" id="birthdateISO">
                 </div>
                 <div class="form-group">
                     <label for="notes">Заметки (необязательно)</label>
@@ -91,10 +103,12 @@
     </div>
 
     <footer>
-        <p>Данные хранятся только в вашем браузере</p>
+        <p>Данные хранятся только в вашем браузере | 
+           <a href="#" id="exportBtn">Экспорт данных</a> | 
+           <a href="#" id="importBtn">Импорт данных</a>
+        </p>
     </footer>
 
     <script src="script.js"></script>
 </body>
-
 </html>
