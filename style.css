@@ -139,9 +139,15 @@ h2 {
 }
 
 .birthday-info {
-    color: #2c3e50 !important;
-    font-weight: bold;
+    color: #1a252f !important;
+    font-weight: 800;
     font-size: 1.1em;
+    background: #e8f4fc;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 8px;
+    border-left: 3px solid #3498db;
 }
 
 .birthday-card.soon {
@@ -553,6 +559,7 @@ footer a:hover {
         color: #95a5a6;
     }
 }
+
 
 
 
