@@ -144,9 +144,8 @@ h2 {
 }
 
 .person-name {
-    filter: brightness(0.8)
     font-size: 1.4em;
-    color: #2c3e50;
+    color: #000000;
     margin-bottom: 5px;
 }
 
@@ -549,4 +548,5 @@ footer a:hover {
         color: #95a5a6;
     }
 }
+
 
