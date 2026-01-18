@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Напоминалка дней рождения</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-birthday-cake"></i> Дни рождения</h1>
+            <p class="subtitle">Локальная напоминалка</p>
+        </header>
+
+        <div class="controls">
+            <button id="addBtn" class="btn-primary">
+                <i class="fas fa-plus"></i> Добавить человека
+            </button>
+            <div class="filter">
+                <label for="monthFilter">Фильтр по месяцу:</label>
+                <select id="monthFilter">
+                    <option value="all">Все месяцы</option>
+                    <option value="0">Январь</option>
+                    <option value="1">Февраль</option>
+                    <option value="2">Март</option>
+                    <option value="3">Апрель</option>
+                    <option value="4">Май</option>
+                    <option value="5">Июнь</option>
+                    <option value="6">Июль</option>
+                    <option value="7">Август</option>
+                    <option value="8">Сентябрь</option>
+                    <option value="9">Октябрь</option>
+                    <option value="10">Ноябрь</option>
+                    <option value="11">Декабрь</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="upcoming">
+            <h2><i class="fas fa-bell"></i> Ближайшие дни рождения</h2>
+            <div id="upcomingList" class="birthday-list"></div>
+        </div>
+
+        <div class="all-birthdays">
+            <h2><i class="fas fa-list"></i> Все дни рождения</h2>
+            <div id="birthdaysList" class="birthday-list"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Сегодня</h3>
+                <p id="todayCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>В этом месяце</h3>
+                <p id="monthCount">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Всего записей</h3>
+                <p id="totalCount">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для добавления/редактирования -->
+    <div id="personModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Добавить человека</h2>
+            <form id="personForm">
+                <div class="form-group">
+                    <label for="name">Имя *</label>
+                    <input type="text" id="name" required placeholder="Например, Иван">
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">Дата рождения *</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Заметки (необязательно)</label>
+                    <textarea id="notes" rows="3" placeholder="Дополнительная информация..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary close-btn">Отмена</button>
+                    <button type="submit" class="btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Данные хранятся только в вашем браузере</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
