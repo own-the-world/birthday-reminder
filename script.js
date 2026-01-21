@@ -9,7 +9,6 @@ class BirthdayReminder {
     init() {
         this.renderAll();
         this.setupEventListeners();
-        this.updateStats();
         this.setupMobileFeatures();
         
         // Восстановление из резервной копии при необходимости
@@ -59,6 +58,8 @@ class BirthdayReminder {
                 const isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
                 if (this.isValidDate(isoDate)) {
                     dateISOInput.value = isoDate;
+                } else {
+                    dateISOInput.value = '';
                 }
             }
         });
@@ -79,6 +80,7 @@ class BirthdayReminder {
                 if (!this.isValidDate(isoDate)) {
                     alert('Пожалуйста, введите корректную дату');
                     dateInput.focus();
+                    dateISOInput.value = '';
                 } else {
                     dateISOInput.value = isoDate;
                 }
@@ -134,9 +136,15 @@ class BirthdayReminder {
         this.renderAll();
         
         // Визуальная обратная связь
-        const monthNames = ['Все месяцы', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
+        const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 
                           'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-        this.showToast(`Фильтр: ${monthNames[newIndex]}`, 1500);
+        
+        // Для отображения корректного названия
+        if (newIndex === 0) {
+            this.showToast(`Фильтр: Все месяцы`, 1500);
+        } else {
+            this.showToast(`Фильтр: ${monthNames[newIndex - 1]}`, 1500);
+        }
     }
 
     // Всплывающее уведомление
@@ -173,7 +181,6 @@ class BirthdayReminder {
     // Сохранение в localStorage
     save() {
         localStorage.setItem('birthdays', JSON.stringify(this.birthdays));
-        this.updateStats();
     }
 
     // Восстановление из резервной копии
@@ -278,8 +285,54 @@ class BirthdayReminder {
 
     // Проверка корректности даты
     isValidDate(dateStr) {
-        const date = new Date(dateStr);
-        return date instanceof Date && !isNaN(date) && dateStr.length === 10;
+        // Проверяем, что строка не пустая
+        if (!dateStr) return false;
+        
+        // Проверяем формат YYYY-MM-DD
+        const isoRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
+        const match = dateStr.match(isoRegex);
+        
+        if (!match) return false;
+        
+        const year = parseInt(match[1], 10);
+        const month = parseInt(match[2], 10);
+        const day = parseInt(match[3], 10);
+        
+        // Проверяем, что месяц от 1 до 12
+        if (month < 1 || month > 12) return false;
+        
+        // Проверяем, что день от 1 до 31
+        if (day < 1 || day > 31) return false;
+        
+        // Проверяем год
+        if (year < 1000 || year > 2100) return false;
+        
+        // Проверяем високосный год
+        const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+        
+        // Проверяем количество дней в месяце
+        const daysInMonth = [
+            31, // январь
+            isLeapYear ? 29 : 28, // февраль
+            31, // март
+            30, // апрель
+            31, // май
+            30, // июнь
+            31, // июль
+            31, // август
+            30, // сентябрь
+            31, // октябрь
+            30, // ноябрь
+            31  // декабрь
+        ];
+        
+        if (day > daysInMonth[month - 1]) return false;
+        
+        // Дополнительная проверка через Date (без проблем с часовыми поясами)
+        const date = new Date(year, month - 1, day);
+        return date.getFullYear() === year && 
+               date.getMonth() === month - 1 && 
+               date.getDate() === day;
     }
 
     // Рендеринг карточки
@@ -347,7 +400,6 @@ class BirthdayReminder {
     // Рендеринг всех карточек
     renderAll() {
         const list = document.getElementById('birthdaysList');
-        const upcomingList = document.getElementById('upcomingList');
         const monthFilter = document.getElementById('monthFilter').value;
         
         // Сортировка по ближайшему ДР
@@ -362,20 +414,10 @@ class BirthdayReminder {
             ? sorted 
             : sorted.filter(p => new Date(p.birthdate).getMonth() === parseInt(monthFilter));
         
-        // Ближайшие (до 30 дней)
-        const upcoming = sorted.filter(p => {
-            const info = this.getBirthdayInfo(p.birthdate);
-            return info.diffDays <= 30 && info.diffDays > 0;
-        }).slice(0, 3);
-        
         // Отображение сообщений если нет данных
         list.innerHTML = filtered.length ? 
             filtered.map(p => this.renderBirthdayCard(p)).join('') :
             '<div class="no-data"><i class="fas fa-inbox"></i><p>Нет записей. Добавьте первую запись!</p></div>';
-        
-        upcomingList.innerHTML = upcoming.length ? 
-            upcoming.map(p => this.renderBirthdayCard(p)).join('') :
-            '<div class="no-data"><i class="fas fa-bell-slash"></i><p>Ближайших дней рождения нет</p></div>';
         
         this.attachCardListeners();
         
@@ -401,30 +443,6 @@ class BirthdayReminder {
             `;
             document.head.appendChild(style);
         }
-    }
-
-    // Статистика
-    updateStats() {
-        const today = new Date();
-        const todayStr = today.toISOString().split('T')[0];
-        const currentMonth = today.getMonth();
-        
-        const todayCount = this.birthdays.filter(p => {
-            const birthDate = new Date(p.birthdate);
-            return birthDate.getDate() === today.getDate() && 
-                   birthDate.getMonth() === today.getMonth();
-        }).length;
-        
-        const monthCount = this.birthdays.filter(p => {
-            return new Date(p.birthdate).getMonth() === currentMonth;
-        }).length;
-        
-        document.getElementById('todayCount').textContent = todayCount;
-        document.getElementById('monthCount').textContent = monthCount;
-        document.getElementById('totalCount').textContent = this.birthdays.length;
-        
-        // Сохраняем резервную копию
-        localStorage.setItem('birthdays_backup', JSON.stringify(this.birthdays));
     }
 
     // Открытие модального окна
@@ -500,7 +518,34 @@ class BirthdayReminder {
                 return;
             }
             
-            if (!dateISOInput || !this.isValidDate(dateISOInput)) {
+            // Проверяем формат ДД.ММ.ГГГГ
+            const dateRegex = /^(\d{2})\.(\d{2})\.(\d{4})$/;
+            const match = dateInput.match(dateRegex);
+            
+            if (!match) {
+                alert('Пожалуйста, введите дату в формате ДД.ММ.ГГГГ');
+                document.getElementById('birthdate').focus();
+                return;
+            }
+            
+            const day = parseInt(match[1], 10);
+            const month = parseInt(match[2], 10);
+            const year = parseInt(match[3], 10);
+            
+            // Проверяем базовую корректность
+            if (month < 1 || month > 12 || day < 1 || day > 31 || year < 1000 || year > 2100) {
+                alert('Пожалуйста, введите корректную дату');
+                document.getElementById('birthdate').focus();
+                return;
+            }
+            
+            // Если ISO дата не заполнена, создаем ее
+            let finalISODate = dateISOInput;
+            if (!finalISODate) {
+                finalISODate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            }
+            
+            if (!this.isValidDate(finalISODate)) {
                 alert('Пожалуйста, введите корректную дату');
                 document.getElementById('birthdate').focus();
                 return;
@@ -508,7 +553,7 @@ class BirthdayReminder {
             
             const formData = {
                 name: nameInput,
-                birthdate: dateISOInput,
+                birthdate: finalISODate,
                 notes: notesInput
             };
             
@@ -674,14 +719,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
         if (now.getHours() === 0 && now.getMinutes() === 0) {
             app.renderAll();
-            app.updateStats();
         }
     }, 60000); // Проверяем каждую минуту
-    
-    // Обновляем каждые 10 минут на всякий случай
-    setInterval(() => {
-        app.updateStats();
-    }, 600000);
     
     // Проверяем есть ли сегодня дни рождения при загрузке
     const today = new Date();
